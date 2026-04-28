@@ -6,189 +6,120 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Inter','Arial',sans-serif; background:#ebebeb; display:flex; height:100vh; overflow:hidden; }
+  body { font-family:'Inter','Arial',sans-serif; background:#efefef; display:flex; height:100vh; overflow:hidden; }
 
-  /* ── 좌측 아이콘 레일 (GNB) ── */
   .rail {
-    width:76px; background:#111; border-radius:0 28px 28px 0;
+    width:76px; background:#111; border-radius:0 32px 32px 0;
     display:flex; flex-direction:column; align-items:center;
-    padding:20px 0; flex-shrink:0; position:relative; z-index:10;
+    padding:20px 0; flex-shrink:0; z-index:10;
   }
   .rail-logo {
     width:42px; height:42px; background:#05C46B; border-radius:14px;
     display:flex; align-items:center; justify-content:center;
-    font-size:20px; font-weight:900; color:#000; margin-bottom:28px; cursor:pointer;
+    font-size:20px; font-weight:900; color:#000; margin-bottom:24px; cursor:pointer;
   }
-  .rail-nav { display:flex; flex-direction:column; align-items:center; gap:4px; flex:1; }
-  .ri {
-    width:46px; height:46px; border-radius:14px; cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    font-size:20px; color:#555; transition:all .15s; position:relative;
-  }
+  .rail-nav { display:flex; flex-direction:column; align-items:center; gap:6px; flex:1; }
+  .ri { width:44px; height:44px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; color:#555; transition:all .15s; }
   .ri:hover { background:#1e1e1e; color:#999; }
   .ri.on { background:#fff; color:#111; }
-  .rail-bottom { display:flex; flex-direction:column; align-items:center; gap:4px; }
-  .rail-sep { width:32px; height:1px; background:#222; margin:12px 0; }
-  .rail-avatar {
-    width:38px; height:38px; border-radius:50%;
-    background:linear-gradient(135deg,#05C46B,#00a855);
-    display:flex; align-items:center; justify-content:center;
-    font-size:14px; font-weight:700; color:#000; cursor:pointer;
-    margin-top:4px;
-  }
+  .rail-bottom { display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .rail-sep { width:32px; height:1px; background:#222; margin:10px 0; }
+  .rail-avatar { width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#05C46B,#00a855); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:#000; cursor:pointer; }
 
-  /* ── 우측 전체 ── */
-  .page-wrap { flex:1; display:flex; flex-direction:column; overflow:hidden; padding:16px 20px 16px 16px; gap:14px; }
+  .page-wrap { flex:1; display:flex; flex-direction:column; overflow:hidden; padding:20px 22px 16px 18px; gap:14px; }
 
-  /* ── 상단 탭 바 (LNB) ── */
-  .topbar {
-    display:flex; align-items:center; gap:0;
-    background:#fff; border-radius:50px; padding:6px;
-    flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,.06);
-  }
-  .tab {
-    padding:8px 20px; border-radius:50px; cursor:pointer;
-    font-size:13px; font-weight:600; color:#aaa; transition:all .15s;
-    text-decoration:none; white-space:nowrap;
-  }
-  .tab:hover { color:#555; }
-  .tab.on { background:#111; color:#fff; }
-  .topbar-right { margin-left:auto; display:flex; align-items:center; gap:10px; padding-right:4px; }
-  .topbar-user {
-    display:flex; align-items:center; gap:9px;
-    background:#f5f5f5; border-radius:50px; padding:6px 12px 6px 6px;
-    cursor:pointer; font-size:13px; font-weight:600; color:#111;
-  }
-  .user-dot { width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,#05C46B,#00a855); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#000; }
+  .topbar { display:flex; align-items:center; gap:2px; flex-shrink:0; }
+  .tab { padding:9px 22px; border-radius:50px; cursor:pointer; font-size:13px; font-weight:600; color:#aaa; transition:all .15s; text-decoration:none; white-space:nowrap; }
+  .tab:hover { color:#555; background:rgba(0,0,0,.04); }
+  .tab.on { background:#fff; color:#111; box-shadow:0 2px 10px rgba(0,0,0,.09); }
+  .topbar-right { margin-left:auto; }
+  .ws-pill { display:flex; align-items:center; gap:10px; background:#05C46B; border-radius:50px; padding:7px 14px 7px 7px; cursor:pointer; }
+  .ws-icon { width:30px; height:30px; border-radius:50%; background:#000; display:flex; align-items:center; justify-content:center; font-size:13px; color:#05C46B; font-weight:900; }
+  .ws-texts { display:flex; flex-direction:column; line-height:1.25; }
+  .ws-name { font-size:12px; font-weight:800; color:#000; }
+  .ws-sub { font-size:10px; font-weight:600; color:rgba(0,0,0,.5); }
+  .ws-chev { font-size:12px; color:rgba(0,0,0,.5); margin-left:2px; }
 
-  /* ── 콘텐츠 그리드 ── */
   .content { flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:14px; }
   .content::-webkit-scrollbar { display:none; }
-
-  /* 그리드 행 */
-  .row { display:flex; gap:14px; }
-  .row.top { align-items:stretch; }
-  .row.bot { align-items:stretch; }
-
-  /* 카드 기본 */
-  .card {
-    background:#fff; border-radius:24px; padding:24px;
-    overflow:hidden; position:relative;
-  }
+  .row { display:flex; gap:14px; align-items:stretch; }
+  .card { background:#fff; border-radius:24px; padding:22px; overflow:hidden; position:relative; }
   .card.dark { background:#111; }
-  .card.green { background:#05C46B; }
-  .card.lime { background:#C9FF4F; }
-  .card.gray { background:#f5f5f5; }
 
-  /* 시간 카드 */
-  .time-card { flex:0 0 260px; display:flex; flex-direction:column; justify-content:space-between; min-height:180px; }
-  .time-label { font-size:11px; color:#555; font-weight:500; display:flex; align-items:center; gap:5px; }
-  .time-val { font-size:52px; font-weight:900; color:#fff; letter-spacing:-2px; line-height:1; margin-top:10px; }
-  .time-pm { font-size:20px; font-weight:600; color:#666; vertical-align:middle; margin-left:4px; }
-  .time-date { font-size:13px; color:#555; margin-top:10px; font-weight:500; }
+  .greeting { font-size:26px; font-weight:900; color:#111; line-height:1.1; }
+  .greeting-sub { font-size:13px; color:#aaa; margin-top:5px; }
 
-  /* 빠른 버튼 카드들 */
-  .quick-stack { flex:0 0 130px; display:flex; flex-direction:column; gap:14px; }
-  .qcard { border-radius:24px; padding:20px; display:flex; flex-direction:column; align-items:flex-start; justify-content:space-between; cursor:pointer; transition:transform .15s; min-height:82px; }
+  .time-card { flex:0 0 240px; display:flex; flex-direction:column; justify-content:space-between; min-height:170px; }
+  .time-label { font-size:11px; color:#555; font-weight:500; }
+  .time-val { font-size:50px; font-weight:900; color:#fff; letter-spacing:-3px; line-height:1; margin-top:8px; }
+  .time-pm { font-size:18px; font-weight:600; color:#666; margin-left:4px; }
+  .time-date { font-size:12px; color:#555; margin-top:8px; font-weight:500; }
+
+  .quick-stack { flex:0 0 130px; display:flex; flex-direction:column; gap:12px; }
+  .qcard { border-radius:22px; padding:18px 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; transition:transform .15s; gap:8px; text-align:center; flex:1; }
   .qcard:hover { transform:scale(1.02); }
   .qcard.lime { background:#C9FF4F; }
-  .qcard.white { background:#fff; border:1.5px solid #f0f0f0; }
-  .qcard-icon { font-size:22px; }
-  .qcard-label { font-size:12px; font-weight:700; color:#111; margin-top:6px; }
+  .qcard.white { background:#fff; }
+  .qcard-icon { width:40px; height:40px; border-radius:12px; background:rgba(0,0,0,.09); display:flex; align-items:center; justify-content:center; font-size:20px; }
+  .qcard-label { font-size:12px; font-weight:700; color:#111; }
 
-  /* 차트 카드 */
-  .chart-card { flex:1; min-height:180px; }
+  .chart-card { flex:1; }
   .chart-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px; }
-  .chart-title { font-size:16px; font-weight:800; color:#111; }
+  .chart-title { font-size:15px; font-weight:800; color:#111; }
   .chart-sub { font-size:11px; color:#aaa; margin-top:2px; }
   .chart-pills { display:flex; gap:6px; }
-  .pill { background:#f0f0f0; border-radius:50px; padding:5px 12px; font-size:12px; font-weight:600; color:#888; cursor:pointer; }
-  .pill.on { background:#111; color:#fff; }
-  .bar-chart { display:flex; align-items:flex-end; gap:10px; height:100px; }
-  .bar-wrap { display:flex; flex-direction:column; align-items:center; gap:6px; flex:1; }
-  .bar-outer { width:100%; border-radius:50px; background:#f0f0f0; overflow:hidden; display:flex; flex-direction:column-reverse; position:relative; }
-  .bar-fill { background:#C9FF4F; border-radius:50px; transition:height .3s; }
-  .bar-label { font-size:10px; color:#bbb; font-weight:600; }
-  .bar-tooltip { position:absolute; top:-28px; left:50%; transform:translateX(-50%); background:#111; color:#fff; font-size:10px; font-weight:700; padding:3px 8px; border-radius:8px; white-space:nowrap; }
+  .cpill { background:#f0f0f0; border-radius:50px; padding:5px 13px; font-size:12px; font-weight:600; color:#888; cursor:pointer; }
+  .cpill.on { background:#111; color:#fff; }
+  .capsule-chart { display:flex; align-items:flex-end; gap:8px; height:108px; }
+  .cap-wrap { display:flex; flex-direction:column; align-items:center; gap:5px; flex:1; }
+  .cap-outer { width:100%; border-radius:50px; background:#f0f0f0; overflow:hidden; display:flex; flex-direction:column-reverse; position:relative; }
+  .cap-fill { background:#C9FF4F; border-radius:50px; transition:height .3s; }
+  .cap-label { font-size:10px; color:#bbb; font-weight:600; }
+  .cap-tooltip { position:absolute; top:-26px; left:50%; transform:translateX(-50%); background:#111; color:#fff; font-size:10px; font-weight:700; padding:3px 8px; border-radius:8px; white-space:nowrap; }
 
-  /* 하단 카드들 */
-  .todo-card { flex:1; min-height:200px; }
-  .notice-card { flex:1; }
-  .proj-card { flex:1; }
-  .stat-card { flex:0 0 160px; display:flex; flex-direction:column; justify-content:space-between; }
+  .roadmap-card { flex:1.5; }
+  .roadmap-head { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px; }
+  .roadmap-title { font-size:22px; font-weight:900; color:#111; line-height:1.15; }
+  .btn-add { background:#111; color:#fff; border:none; border-radius:50px; padding:9px 16px; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:5px; flex-shrink:0; }
+  .gantt-row { display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid #f5f5f5; }
+  .gantt-row:last-child { border:none; }
+  .gantt-name { font-size:12px; font-weight:600; color:#888; width:70px; flex-shrink:0; }
+  .gantt-track { flex:1; height:26px; position:relative; }
+  .gantt-bar { height:26px; border-radius:50px; display:flex; align-items:center; padding:0 12px; font-size:11px; font-weight:700; white-space:nowrap; gap:8px; }
+  .gantt-bar.done { background:#e8e8e8; color:#888; }
+  .gantt-bar.lime { background:#C9FF4F; color:#111; }
+  .gantt-bar.idle { background:#f5f5f5; color:#bbb; border:1.5px dashed #e0e0e0; }
+  .gantt-avts { display:flex; margin-left:auto; flex-shrink:0; }
+  .gavt { width:22px; height:22px; border-radius:50%; border:2px solid #fff; margin-left:-7px; font-size:9px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .gavt:first-child { margin-left:0; }
+  .dates-row { display:flex; margin-top:8px; }
+  .ditem { flex:1; text-align:center; font-size:10px; color:#ccc; font-weight:600; }
+  .ditem.now { color:#111; font-weight:800; }
 
-  .card-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
-  .card-title { font-size:15px; font-weight:800; color:#111; }
-  .card.dark .card-title { color:#fff; }
-  .card-link { font-size:12px; color:#bbb; text-decoration:none; cursor:pointer; }
-  .card-link:hover { color:#05C46B; }
+  .cal-card { flex:1; }
+  .cal-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  .cal-title { font-size:14px; font-weight:800; color:#111; }
+  .cal-nav { background:none; border:none; font-size:16px; cursor:pointer; color:#888; padding:2px 6px; }
+  .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:1px; }
+  .cdh { text-align:center; font-size:10px; font-weight:700; color:#ccc; padding:3px 0; }
+  .cd { text-align:center; font-size:12px; padding:5px 2px; border-radius:50%; cursor:pointer; color:#555; font-weight:500; line-height:1; }
+  .cd:hover { background:#f0f0f0; }
+  .cd.today { background:#111; color:#fff !important; font-weight:800; border-radius:50%; }
+  .cd.mark { background:#C9FF4F; color:#111; font-weight:800; border-radius:50%; }
+  .cd.dim { color:#ddd; }
 
-  /* 근태 카드 */
-  .attend-card { flex:0 0 260px; }
-  .working-badge { display:inline-flex; align-items:center; gap:5px; background:#e8fdf2; color:#05C46B; font-size:11px; font-weight:700; padding:4px 10px; border-radius:50px; margin-bottom:14px; }
-  .working-dot { width:7px; height:7px; border-radius:50%; background:#05C46B; }
-  .attend-btns { display:flex; gap:8px; margin-bottom:14px; }
-  .abtn { flex:1; padding:10px; border-radius:14px; border:none; font-size:12px; font-weight:700; cursor:pointer; transition:all .15s; }
-  .abtn.in { background:#05C46B; color:#000; }
-  .abtn.in:hover { background:#00F15D; }
-  .abtn.out { background:#f5f5f5; color:#888; }
-  .stat-row { display:flex; gap:0; background:#f8f8f8; border-radius:14px; overflow:hidden; }
-  .sitem { flex:1; text-align:center; padding:10px 6px; border-right:1px solid #efefef; }
-  .sitem:last-child { border:none; }
-  .sv { font-size:14px; font-weight:800; color:#111; }
-  .sk { font-size:10px; color:#aaa; margin-top:2px; font-weight:500; }
+  .stat-card { flex:0 0 155px; display:flex; flex-direction:column; gap:12px; }
+  .stat-top { background:#fff; border-radius:24px; padding:20px; flex:1; display:flex; flex-direction:column; justify-content:space-between; }
+  .stat-label { font-size:14px; font-weight:800; color:#111; line-height:1.3; }
+  .stat-big { font-size:38px; font-weight:900; color:#111; letter-spacing:-2px; line-height:1; margin-top:auto; }
+  .stat-unit { font-size:12px; color:#aaa; font-weight:500; }
+  .btn-cta { background:#4B7BF5; color:#fff; border:none; border-radius:50px; padding:12px 16px; font-size:13px; font-weight:700; cursor:pointer; width:100%; display:flex; align-items:center; justify-content:center; gap:6px; }
 
-  /* 할일 목록 */
-  .empty-todo { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100px; color:#ddd; font-size:13px; gap:8px; }
-  .empty-icon { font-size:28px; }
-
-  /* 프로젝트 리스트 */
-  .proj-item { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid #f5f5f5; }
-  .proj-item:last-child { border:none; }
-  .proj-name { font-size:13px; font-weight:600; color:#111; }
-  .proj-tags { display:flex; gap:5px; }
-  .ptag { font-size:10px; padding:3px 8px; border-radius:50px; font-weight:700; }
-  .ptag.go { background:#e8f5e9; color:#2e7d32; }
-  .ptag.d { background:#f5f5f5; color:#999; }
-  .prog-bar { height:5px; background:#f0f0f0; border-radius:50px; margin-top:4px; overflow:hidden; }
-  .prog-fill { height:100%; background:#05C46B; border-radius:50px; }
-
-  /* 도넛 차트 */
-  .donut-wrap { display:flex; align-items:center; gap:16px; margin-top:8px; }
-  .legend { display:flex; flex-direction:column; gap:7px; }
-  .lrow { display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:12px; color:#888; }
-  .ldot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-  .lval { font-weight:800; color:#111; }
-
-  /* 공지 */
-  .notice-item { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid #f5f5f5; }
-  .notice-item:last-child { border:none; }
-  .nbadge { background:#f0f0f0; color:#888; font-size:10px; font-weight:700; padding:2px 7px; border-radius:6px; flex-shrink:0; margin-top:1px; }
-  .ntext { font-size:13px; font-weight:600; color:#111; }
-  .nmeta { font-size:11px; color:#ccc; margin-top:2px; }
-
-  /* 큰 숫자 stat */
-  .big-num { font-size:48px; font-weight:900; color:#111; letter-spacing:-2px; line-height:1; margin-top:auto; }
-  .big-unit { font-size:14px; color:#aaa; font-weight:500; }
-  .stat-label { font-size:13px; font-weight:700; color:#111; line-height:1.3; }
-
-  /* 버튼 */
-  .btn-primary { background:#05C46B; color:#000; border:none; border-radius:50px; padding:9px 18px; font-size:13px; font-weight:700; cursor:pointer; }
-  .btn-primary:hover { background:#00F15D; }
-  .btn-dark { background:#111; color:#fff; border:none; border-radius:50px; padding:9px 18px; font-size:13px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:6px; }
-  .btn-dark:hover { background:#222; }
-
-  /* 태그 */
   .tag-label { position:fixed; bottom:16px; right:16px; background:#111; color:#05C46B; border:1px solid #05C46B; border-radius:50px; padding:6px 14px; font-size:11px; font-weight:700; z-index:999; }
-
-  /* 인사말 */
-  .greeting { font-size:26px; font-weight:900; color:#111; line-height:1.2; }
-  .greeting-sub { font-size:13px; color:#aaa; margin-top:4px; font-weight:500; }
 </style>
 </head>
 <body>
 
-<!-- GNB: 좌측 아이콘 레일 -->
 <nav class="rail">
   <div class="rail-logo">W</div>
   <div class="rail-nav">
@@ -202,45 +133,38 @@
   </div>
   <div class="rail-bottom">
     <div class="rail-sep"></div>
-    <div class="ri" title="로그아웃" style="font-size:18px;color:#444;">→</div>
+    <div class="ri" style="font-size:16px;color:#444;">↩</div>
     <div class="rail-avatar">문</div>
   </div>
 </nav>
 
-<!-- 우측 전체 -->
 <div class="page-wrap">
 
-  <!-- LNB: 상단 탭 바 -->
   <header class="topbar">
     <a class="tab on" href="#">Overview</a>
     <a class="tab" href="#">프로젝트</a>
     <a class="tab" href="#">미팅</a>
     <a class="tab" href="#">게시판</a>
     <div class="topbar-right">
-      <div class="topbar-user">
-        <div class="user-dot">문</div>
-        문수민 &nbsp;<span style="color:#ccc;font-size:11px;">jj676681@gmail.com</span>
-        <span style="color:#bbb;font-size:12px;margin-left:4px;">⌄</span>
+      <div class="ws-pill">
+        <div class="ws-icon">W</div>
+        <div class="ws-texts">
+          <span class="ws-name">WiTiM</span>
+          <span class="ws-sub">Dashboard</span>
+        </div>
+        <span class="ws-chev">⌄</span>
       </div>
     </div>
   </header>
 
-  <!-- 콘텐츠 -->
   <div class="content">
 
-    <!-- 인사말 -->
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;">
-      <div>
-        <div class="greeting">좋은 오후입니다, 문수민님 👋</div>
-        <div class="greeting-sub">오늘도 팀이 함께 움직이고 있어요!</div>
-      </div>
-      <button class="btn-dark">＋ 새 업무</button>
+    <div>
+      <div class="greeting">좋은 오후입니다, 문수민님 👋</div>
+      <div class="greeting-sub">오늘도 팀이 함께 움직이고 있어요!</div>
     </div>
 
-    <!-- 상단 행 -->
-    <div class="row top">
-
-      <!-- 시간 카드 -->
+    <div class="row">
       <div class="card dark time-card">
         <div class="time-label">⏰ 현재 시간 · 서울</div>
         <div>
@@ -249,7 +173,6 @@
         </div>
       </div>
 
-      <!-- 퀵 버튼 2개 -->
       <div class="quick-stack">
         <div class="qcard lime">
           <div class="qcard-icon">▷</div>
@@ -261,24 +184,6 @@
         </div>
       </div>
 
-      <!-- 근태 카드 -->
-      <div class="card attend-card">
-        <div class="card-head">
-          <div class="card-title">내 근태현황</div>
-          <span class="working-badge"><span class="working-dot"></span>근무중</span>
-        </div>
-        <div class="attend-btns">
-          <button class="abtn in">→ 출근하기</button>
-          <button class="abtn out">→ 퇴근하기</button>
-        </div>
-        <div class="stat-row">
-          <div class="sitem"><div class="sv">10:41</div><div class="sk">출근</div></div>
-          <div class="sitem"><div class="sv">--:--</div><div class="sk">퇴근</div></div>
-          <div class="sitem"><div class="sv">4h 01m</div><div class="sk">근무</div></div>
-        </div>
-      </div>
-
-      <!-- 프로젝트 현황 차트 -->
       <div class="card chart-card">
         <div class="chart-header">
           <div>
@@ -286,196 +191,89 @@
             <div class="chart-sub">최근 7일 태스크 완료 추이</div>
           </div>
           <div class="chart-pills">
-            <div class="pill on">완료</div>
-            <div class="pill">지연</div>
+            <div class="cpill on">완료</div>
+            <div class="cpill">지연</div>
           </div>
         </div>
-        <div class="bar-chart">
-          <div class="bar-wrap">
-            <div class="bar-outer" style="height:90px;">
-              <div class="bar-fill" style="height:45%;"></div>
-            </div>
-            <div class="bar-label">MON</div>
-          </div>
-          <div class="bar-wrap">
-            <div class="bar-outer" style="height:90px;">
-              <div class="bar-fill" style="height:60%;"></div>
-            </div>
-            <div class="bar-label">TUE</div>
-          </div>
-          <div class="bar-wrap">
-            <div class="bar-outer" style="height:90px;">
-              <div class="bar-fill" style="height:35%;"></div>
-            </div>
-            <div class="bar-label">WED</div>
-          </div>
-          <div class="bar-wrap" style="position:relative;">
-            <div class="bar-outer" style="height:90px;">
-              <div class="bar-fill" style="height:80%;"></div>
-              <div class="bar-tooltip">226건</div>
-            </div>
-            <div class="bar-label" style="color:#111;font-weight:700;">THU</div>
-          </div>
-          <div class="bar-wrap">
-            <div class="bar-outer" style="height:90px;">
-              <div class="bar-fill" style="height:55%;"></div>
-            </div>
-            <div class="bar-label">FRI</div>
-          </div>
-          <div class="bar-wrap">
-            <div class="bar-outer" style="height:90px;">
-              <div class="bar-fill" style="height:70%;"></div>
-            </div>
-            <div class="bar-label">SAT</div>
-          </div>
-          <div class="bar-wrap">
-            <div class="bar-outer" style="height:90px;">
-              <div class="bar-fill" style="height:40%;"></div>
-            </div>
-            <div class="bar-label">SUN</div>
-          </div>
+        <div class="capsule-chart">
+          <div class="cap-wrap"><div class="cap-outer" style="height:100px;"><div class="cap-fill" style="height:45%;"></div></div><div class="cap-label">MON</div></div>
+          <div class="cap-wrap"><div class="cap-outer" style="height:100px;"><div class="cap-fill" style="height:60%;"></div></div><div class="cap-label">TUE</div></div>
+          <div class="cap-wrap"><div class="cap-outer" style="height:100px;"><div class="cap-fill" style="height:35%;"></div></div><div class="cap-label">WED</div></div>
+          <div class="cap-wrap" style="position:relative;"><div class="cap-outer" style="height:100px;"><div class="cap-fill" style="height:80%;"></div><div class="cap-tooltip">226건</div></div><div class="cap-label" style="color:#111;font-weight:700;">THU</div></div>
+          <div class="cap-wrap"><div class="cap-outer" style="height:100px;"><div class="cap-fill" style="height:55%;"></div></div><div class="cap-label">FRI</div></div>
+          <div class="cap-wrap"><div class="cap-outer" style="height:100px;"><div class="cap-fill" style="height:70%;"></div></div><div class="cap-label">SAT</div></div>
+          <div class="cap-wrap"><div class="cap-outer" style="height:100px;"><div class="cap-fill" style="height:40%;"></div></div><div class="cap-label">SUN</div></div>
         </div>
       </div>
-
     </div>
 
-    <!-- 하단 행 -->
-    <div class="row bot">
-
-      <!-- 프로젝트 로드맵 카드 -->
-      <div class="card proj-card">
-        <div class="card-head">
-          <div class="card-title">진행 중인 프로젝트</div>
-          <a class="card-link">전체보기 ›</a>
+    <div class="row">
+      <div class="card roadmap-card">
+        <div class="roadmap-head">
+          <div class="roadmap-title">Project<br>Roadmap</div>
+          <button class="btn-add">＋ 업무 추가</button>
         </div>
-        <div class="proj-item">
-          <div style="flex:1;">
-            <div class="proj-name">더블유닷 (업데이트)</div>
-            <div class="prog-bar" style="width:180px;margin-top:6px;"><div class="prog-fill" style="width:90%;"></div></div>
-          </div>
-          <div class="proj-tags">
-            <span class="ptag go">진행중</span>
-            <span class="ptag d">D+59</span>
+        <div class="gantt-row">
+          <div class="gantt-name">더블유닷</div>
+          <div class="gantt-track">
+            <div class="gantt-bar done" style="width:90%;">100%<div class="gantt-avts"><div class="gavt" style="background:#C9FF4F;color:#111;">문</div><div class="gavt" style="background:#aaa;color:#fff;">박</div></div></div>
           </div>
         </div>
-        <div class="proj-item">
-          <div style="flex:1;">
-            <div class="proj-name">위팀 모바일 앱 QA</div>
-            <div class="prog-bar" style="width:180px;margin-top:6px;"><div class="prog-fill" style="width:65%;"></div></div>
-          </div>
-          <div class="proj-tags">
-            <span class="ptag go">진행중</span>
-            <span class="ptag d">D+39</span>
+        <div class="gantt-row">
+          <div class="gantt-name">모바일 QA</div>
+          <div class="gantt-track">
+            <div class="gantt-bar idle" style="width:100%;">59%<div class="gantt-avts"><div class="gavt" style="background:#f5a623;color:#fff;">전</div></div></div>
           </div>
         </div>
-        <div class="proj-item">
-          <div style="flex:1;">
-            <div class="proj-name">위팀 웹 수정사항</div>
-            <div class="prog-bar" style="width:180px;margin-top:6px;"><div class="prog-fill" style="width:50%;"></div></div>
-          </div>
-          <div class="proj-tags">
-            <span class="ptag go">진행중</span>
-            <span class="ptag d">D+20</span>
+        <div class="gantt-row">
+          <div class="gantt-name">웹 수정</div>
+          <div class="gantt-track">
+            <div class="gantt-bar lime" style="width:75%;">75%<div class="gantt-avts"><div class="gavt" style="background:#4B7BF5;color:#fff;">노</div><div class="gavt" style="background:#e74c3c;color:#fff;">레</div><div class="gavt" style="background:#9b59b6;color:#fff;">이</div></div></div>
           </div>
         </div>
-        <div class="proj-item">
-          <div style="flex:1;">
-            <div class="proj-name">기술이전</div>
-            <div class="prog-bar" style="width:180px;margin-top:6px;"><div class="prog-fill" style="width:40%;"></div></div>
-          </div>
-          <div class="proj-tags">
-            <span class="ptag go">진행중</span>
-            <span class="ptag d">D+20</span>
+        <div class="gantt-row">
+          <div class="gantt-name">기술이전</div>
+          <div class="gantt-track">
+            <div class="gantt-bar idle" style="width:55%;">40%</div>
           </div>
         </div>
-        <div class="proj-item" style="border:none;">
-          <div style="flex:1;">
-            <div class="proj-name">ofis.kr – 스타트업 M&amp;A</div>
-            <div class="prog-bar" style="width:180px;margin-top:6px;"><div class="prog-fill" style="width:30%;"></div></div>
-          </div>
-          <div class="proj-tags">
-            <span class="ptag go">진행중</span>
-            <span class="ptag d">D+14</span>
-          </div>
+        <div class="dates-row">
+          <div class="ditem">월 21</div><div class="ditem">화 22</div><div class="ditem">수 23</div>
+          <div class="ditem now">목 24</div><div class="ditem">금 25</div>
         </div>
       </div>
 
-      <!-- 공지사항 카드 -->
-      <div class="card notice-card">
-        <div class="card-head">
-          <div class="card-title">공지사항</div>
-          <a class="card-link">더보기 ›</a>
+      <div class="card cal-card">
+        <div class="cal-head">
+          <div class="cal-title">2026년 4월</div>
+          <div style="display:flex;gap:4px;"><button class="cal-nav">‹</button><button class="cal-nav">›</button></div>
         </div>
-        <div class="notice-item">
-          <span class="nbadge">공지</span>
+        <div class="cal-grid">
+          <div class="cdh">S</div><div class="cdh">M</div><div class="cdh">T</div><div class="cdh">W</div><div class="cdh">T</div><div class="cdh">F</div><div class="cdh">S</div>
+          <div class="cd dim">30</div><div class="cd dim">31</div><div class="cd">1</div><div class="cd">2</div><div class="cd">3</div><div class="cd">4</div><div class="cd">5</div>
+          <div class="cd">6</div><div class="cd">7</div><div class="cd">8</div><div class="cd">9</div><div class="cd">10</div><div class="cd">11</div><div class="cd">12</div>
+          <div class="cd">13</div><div class="cd">14</div><div class="cd">15</div><div class="cd">16</div><div class="cd mark">17</div><div class="cd">18</div><div class="cd">19</div>
+          <div class="cd">20</div><div class="cd">21</div><div class="cd">22</div><div class="cd">23</div><div class="cd">24</div><div class="cd">25</div><div class="cd">26</div>
+          <div class="cd">27</div><div class="cd today">28</div><div class="cd">29</div><div class="cd">30</div><div class="cd dim">1</div><div class="cd dim">2</div><div class="cd dim">3</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-label">근태<br>현황</div>
           <div>
-            <div class="ntext">[공지] 근태제도 안내</div>
-            <div class="nmeta">박민환 · 2026-04-01</div>
+            <div class="stat-big">4h<span style="font-size:22px;color:#aaa;"> 01m</span></div>
+            <div class="stat-unit">오늘 근무시간</div>
           </div>
         </div>
-        <div class="notice-item">
-          <span class="nbadge">공지</span>
-          <div>
-            <div class="ntext">점수제도 도입</div>
-            <div class="nmeta">전민준 · 2026-01-05</div>
-          </div>
-        </div>
-        <div class="card-head" style="margin-top:16px;margin-bottom:12px;">
-          <div class="card-title">최근 게시글</div>
-          <a class="card-link">더보기 ›</a>
-        </div>
-        <div class="notice-item">
-          <div style="width:6px;height:6px;border-radius:50%;background:#05C46B;margin-top:5px;flex-shrink:0;"></div>
-          <div><div class="ntext">123</div><div class="nmeta">CodeB · 2026-03-05</div></div>
-        </div>
-        <div class="notice-item">
-          <div style="width:6px;height:6px;border-radius:50%;background:#ddd;margin-top:5px;flex-shrink:0;"></div>
-          <div><div class="ntext">게시글 작성 테스트</div><div class="nmeta">노성준 · 2026-03-04</div></div>
-        </div>
-        <div class="notice-item" style="border:none;">
-          <div style="width:6px;height:6px;border-radius:50%;background:#ddd;margin-top:5px;flex-shrink:0;"></div>
-          <div><div class="ntext">에러게시판</div><div class="nmeta">레오처럼 · 2026-01-05</div></div>
-        </div>
+        <button class="btn-cta">보고서 보기 ↗</button>
       </div>
-
-      <!-- 프로젝트 현황 도넛 -->
-      <div class="card" style="flex:0 0 200px;display:flex;flex-direction:column;">
-        <div class="card-title" style="margin-bottom:8px;">전체 현황</div>
-        <div style="font-size:11px;color:#aaa;margin-bottom:14px;">완료율 70%</div>
-        <div class="donut-wrap">
-          <svg width="80" height="80" viewBox="0 0 80 80">
-            <circle cx="40" cy="40" r="30" fill="none" stroke="#f0f0f0" stroke-width="10"/>
-            <circle cx="40" cy="40" r="30" fill="none" stroke="#C9FF4F" stroke-width="10"
-              stroke-dasharray="132 56" stroke-dashoffset="33" stroke-linecap="round"/>
-            <text x="40" y="45" text-anchor="middle" font-size="13" font-weight="900" fill="#111">70%</text>
-          </svg>
-          <div class="legend">
-            <div class="lrow"><div style="display:flex;align-items:center;gap:5px;"><span class="ldot" style="background:#C9FF4F;"></span>완료</div><span class="lval">226</span></div>
-            <div class="lrow"><div style="display:flex;align-items:center;gap:5px;"><span class="ldot" style="background:#ddd;"></span>진행</div><span class="lval">99</span></div>
-            <div class="lrow"><div style="display:flex;align-items:center;gap:5px;"><span class="ldot" style="background:#f87171;"></span>지연</div><span class="lval">61</span></div>
-          </div>
-        </div>
-        <button class="btn-dark" style="margin-top:auto;justify-content:center;font-size:12px;padding:8px 14px;">프로젝트 보기 ↗</button>
-      </div>
-
-      <!-- 할 일 카드 -->
-      <div class="card todo-card">
-        <div class="card-head">
-          <div class="card-title">할 일 목록</div>
-          <a class="card-link">전체보기 ›</a>
-        </div>
-        <div class="empty-todo">
-          <div class="empty-icon">🕐</div>
-          <div>할 일이 없습니다</div>
-        </div>
-        <button class="btn-primary" style="width:100%;margin-top:12px;">＋ 할 일 추가</button>
-      </div>
-
     </div>
+
   </div>
 </div>
 
-<div class="tag-label">시안 A — 좌측 레일 GNB + 수평 LNB 탭</div>
+<div class="tag-label">시안 A — 레일 GNB + 플로팅 LNB</div>
 
 </body>
 </html>
