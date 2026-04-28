@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>WiTiM — GNB/LNB 레이아웃 시안</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Arial',sans-serif; background:#0a0a0a; color:#f0f0f0; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; }
+  .logo { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .logo-box { width:40px; height:40px; background:#05C46B; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:900; color:#000; }
+  .logo-text { font-size:24px; font-weight:900; color:#05C46B; letter-spacing:-0.5px; }
+  .subtitle { font-size:14px; color:#444; margin-bottom:48px; text-align:center; }
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; width:100%; max-width:760px; }
+  .card { background:#111; border:1px solid #1c1c1c; border-radius:16px; padding:28px; text-decoration:none; transition:all 0.2s; position:relative; overflow:hidden; display:block; }
+  .card:hover { border-color:#05C46B; background:#141414; transform:translateY(-2px); }
+  .card-badge { display:inline-block; background:#05C46B; color:#000; font-size:11px; font-weight:800; padding:3px 10px; border-radius:20px; margin-bottom:14px; }
+  .card-title { font-size:16px; font-weight:800; color:#f0f0f0; margin-bottom:6px; }
+  .card-desc { font-size:12px; color:#555; line-height:1.6; }
+  .card-arrow { position:absolute; top:28px; right:24px; font-size:18px; color:#333; transition:color 0.2s; }
+  .card:hover .card-arrow { color:#05C46B; }
+  .footer { margin-top:48px; font-size:12px; color:#333; }
+</style>
+</head>
+<body>
+  <div class="logo"><div class="logo-box">W</div><span class="logo-text">WITIM</span></div>
+  <p class="subtitle">GNB / LNB 레이아웃 시안 4종 — 클릭하여 확인하세요</p>
+  <div class="grid">
+    <a class="card" href="sianA.html"><span class="card-badge">시안 A</span><span class="card-arrow">↗</span><div class="card-title">상단 GNB + 좌측 LNB</div><p class="card-desc">로고·워크스페이스·검색을 상단에 배치하고,<br>메뉴·워크스페이스 목록은 좌측 사이드바에 분리</p></a>
+    <a class="card" href="sianB.html"><span class="card-badge">시안 B</span><span class="card-arrow">↗</span><div class="card-title">통합 좌측 사이드바</div><p class="card-desc">GNB 없음. 로고·유저·검색·새업무·메뉴·설정을<br>하나의 넓은 사이드바에 통합 (Notion/Linear 스타일)</p></a>
+    <a class="card" href="sianC.html"><span class="card-badge">시안 C</span><span class="card-arrow">↗</span><div class="card-title">상단 더블 헤더</div><p class="card-desc">1줄: 로고·워크스페이스·검색·유저<br>2줄: 메뉴 수평 탭바 — 사이드바 완전 제거</p></a>
+    <a class="card" href="sianD.html"><span class="card-badge">시안 D</span><span class="card-arrow">↗</span><div class="card-title">60px 아이콘 레일 + 토글 LNB</div><p class="card-desc">극좌 아이콘 바(GNB) + 슬라이드 패널(LNB)<br>햄버거 버튼으로 LNB 열고 닫기 가능</p></a>
+  </div>
+  <p class="footer">WiTiM · 3WAVES · Wave 2 Platform · 2026</p>
+</body>
+</html>

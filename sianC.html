@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>WiTiM — 시안 C</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Arial,sans-serif;background:#f5f5f5;color:#111;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+  .gnb{height:52px;background:#0a0a0a;display:flex;align-items:center;padding:0 24px;gap:12px;flex-shrink:0;z-index:100}
+  .gnb-logo{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:900;color:#05C46B;letter-spacing:-.5px;text-decoration:none}
+  .lbox{width:30px;height:30px;background:#05C46B;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#000}
+  .gsep{width:1px;height:20px;background:#242424}
+  .gws{display:flex;align-items:center;gap:7px;background:#141414;border:1px solid #242424;border-radius:8px;padding:5px 11px;cursor:pointer;color:#f0f0f0;font-size:13px}
+  .gws .badge{background:#05C46B;color:#000;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px}
+  .gmid{flex:1;display:flex;justify-content:center}
+  .gsrch{display:flex;align-items:center;gap:8px;background:#141414;border:1px solid #242424;border-radius:8px;padding:6px 12px;width:320px;cursor:text;color:#444;font-size:13px}
+  .gsrch kbd{background:#1c1c1c;border:1px solid #2a2a2a;border-radius:4px;padding:1px 5px;font-size:10px;color:#555}
+  .gr{display:flex;align-items:center;gap:6px}
+  .gbtn{width:32px;height:32px;border-radius:8px;border:none;background:#141414;color:#909090;cursor:pointer;font-size:15px}
+  .gbtn:hover{background:#1c1c1c;color:#f0f0f0}
+  .avt{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#05C46B,#00a855);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#000;cursor:pointer}
+  .lnbbar{height:44px;background:#fff;border-bottom:1px solid #e8e8e8;display:flex;align-items:stretch;padding:0 24px;flex-shrink:0}
+  .ltab{display:flex;align-items:center;gap:7px;padding:0 14px;cursor:pointer;color:#888;font-size:13px;font-weight:500;border-bottom:2px solid transparent;transition:all .15s;text-decoration:none;white-space:nowrap}
+  .ltab:hover{color:#333;border-bottom-color:#ddd}
+  .ltab.on{color:#05C46B;border-bottom-color:#05C46B;font-weight:700}
+  .ltab .ico{font-size:14px}
+  .ltab .cnt{background:#f0f0f0;color:#888;font-size:10px;padding:1px 6px;border-radius:10px}
+  .ltab.on .cnt{background:rgba(5,196,107,.15);color:#05C46B}
+  .lbr{margin-left:auto;display:flex;align-items:center}
+  .bn{background:#05C46B;color:#000;border:none;border-radius:8px;padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer}
+  .bn:hover{background:#00F15D}
+  .content{flex:1;overflow-y:auto;padding:24px 32px;background:#f5f5f5}
+  .ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px}
+  .pg{font-size:22px;font-weight:800;color:#111}
+  .ps{font-size:13px;color:#888;margin-top:3px}
+  .pq{font-size:13px;color:#05C46B;margin-top:2px}
+  .r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+  .card{background:#fff;border-radius:14px;padding:20px;border:1px solid #e8e8e8}
+  .card.dk{background:#0a0a0a;border-color:#1c1c1c}
+  .card.gs{background:#f0fdf7;border-color:#c3f0da}
+  .cl{font-size:11px;color:#aaa;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+  .dk .cl{color:#444}.gs .cl{color:#27ae60}
+  .tv{font-size:38px;font-weight:900;color:#f0f0f0;letter-spacing:-1px}
+  .tpm{font-size:16px;color:#909090}
+  .td{font-size:12px;color:#444;margin-top:6px}
+  .tmp{font-size:34px;font-weight:800;color:#f0f0f0}
+  .ts{font-size:11px;color:#555;margin-top:4px}
+  .wb{background:#05C46B;color:#000;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:10px}
+  .ar{display:flex;gap:8px;margin-bottom:12px}
+  .ab{flex:1;padding:9px;border-radius:9px;border:none;font-size:13px;font-weight:700;cursor:pointer}
+  .ai{background:#05C46B;color:#000}.ao{background:#1c1c1c;color:#666;border:1px solid #242424}
+  .sr{display:flex;gap:16px}
+  .sv{font-size:15px;font-weight:800;color:#111}
+  .sk{font-size:10px;color:#888;margin-top:1px}
+  .ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .ct{font-size:14px;font-weight:700;color:#111}
+  .cl2{font-size:12px;color:#bbb;text-decoration:none}
+  .cl2:hover{color:#05C46B}
+  .emp{text-align:center;padding:28px 0;color:#ccc;font-size:13px}
+  .pr{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+  .pr:last-child{border-bottom:none}
+  .tg{font-size:11px;padding:2px 7px;border-radius:5px;font-weight:600}
+  .go{background:#e8f5e9;color:#2e7d32}.dy{background:#f5f5f5;color:#888}
+  .ca{display:flex;align-items:center;gap:18px;padding:8px 0}
+  .lg{display:flex;flex-direction:column;gap:7px}
+  .lr{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:#666}
+  .ld{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .ln{font-weight:700;color:#111}
+  .vb{width:100%;margin-top:10px;background:#0a0a0a;color:#f0f0f0;border:none;border-radius:9px;padding:9px;font-size:13px;font-weight:700;cursor:pointer}
+  .bk{position:fixed;bottom:16px;left:16px;background:#0a0a0a;color:#05C46B;border:1px solid #05C46B;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;text-decoration:none;z-index:999}
+  .tag{position:fixed;bottom:16px;right:16px;background:#0a0a0a;color:#05C46B;border:1px solid #05C46B;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;z-index:999}
+</style>
+</head>
+<body>
+<a class="bk" href="index.html">← 목록으로</a>
+<header class="gnb">
+  <a class="gnb-logo" href="index.html"><div class="lbox">W</div>WITIM</a>
+  <div class="gsep"></div>
+  <div class="gws"><span>www</span><span class="badge">Enterprise</span><span style="color:#444">▾</span></div>
+  <div class="gmid"><div class="gsrch">🔍 검색...<kbd>⌘K</kbd></div></div>
+  <div class="gr"><button class="gbtn">🔔</button><button class="gbtn">⚙</button><div class="avt">문</div></div>
+</header>
+<nav class="lnbbar">
+  <a class="ltab on" href="#"><span class="ico">🏠</span>홈</a>
+  <a class="ltab" href="#"><span class="ico">👤</span>마이</a>
+  <a class="ltab" href="#"><span class="ico">✅</span>내작업<span class="cnt">3</span></a>
+  <a class="ltab" href="#"><span class="ico">📄</span>전자결재</a>
+  <a class="ltab" href="#"><span class="ico">📁</span>프로젝트<span class="cnt">5</span></a>
+  <a class="ltab" href="#"><span class="ico">📊</span>마일랑</a>
+  <a class="ltab" href="#"><span class="ico">📅</span>캘린더</a>
+  <a class="ltab" href="#"><span class="ico">💬</span>미팅</a>
+  <a class="ltab" href="#"><span class="ico">📋</span>게시판</a>
+  <div class="lbr"><button class="bn">＋ 새 업무</button></div>
+</nav>
+<main class="content">
+  <div class="ph"><div><div class="pg">좋은 오후입니다, 문수민님!</div><div class="ps">2026년 4월 28일 화요일</div><div class="pq">"갈등을 지혜롭게 해결하라."</div></div></div>
+  <div class="r3">
+    <div class="card dk"><div class="cl">⏰ 현재 시간 · 서울</div><div class="tv">14:42 <span class="tpm">PM</span></div><div class="td">2026. 04. 28 화요일</div></div>
+    <div class="card dk"><div class="cl">🌤 서울 · 흐림</div><div class="tmp">16°</div><div class="ts">체감 14° · 습도 40% · 바람 2m/s</div></div>
+    <div class="card gs"><div style="display:flex;align-items:center;justify-content:space-between"><div class="cl" style="margin-bottom:0">🏃 내 근태현황</div><span class="wb">근무중</span></div><div class="ar" style="margin-top:10px"><button class="ab ai">→ 출근하기</button><button class="ab ao">→ 퇴근하기</button></div><div class="sr"><div><div class="sv">10:41</div><div class="sk">출근</div></div><div><div class="sv">--:--</div><div class="sk">퇴근</div></div><div><div class="sv">4h 01m</div><div class="sk">근무</div></div></div></div>
+  </div>
+  <div class="r3">
+    <div class="card"><div class="ch"><div class="ct">⏰ 할 일 목록</div><a class="cl2" href="#">전체보기 ›</a></div><div class="emp">🕐<br>할 일이 없습니다</div></div>
+    <div class="card"><div class="ch"><div class="ct">📁 프로젝트 <span style="color:#ccc;font-weight:400;font-size:12px">5개</span></div><a class="cl2" href="#">전체보기 ›</a></div><div class="pr"><span>더블유닷(업데이트)</span><div style="display:flex;gap:5px"><span class="tg go">진행중</span><span class="tg dy">D+59</span></div></div><div class="pr"><span>위팀 모바일 QA</span><div style="display:flex;gap:5px"><span class="tg go">진행중</span><span class="tg dy">D+39</span></div></div><div class="pr"><span>위팀 웹 수정</span><div style="display:flex;gap:5px"><span class="tg go">진행중</span><span class="tg dy">D+20</span></div></div><div class="pr"><span>기술이전</span><div style="display:flex;gap:5px"><span class="tg go">진행중</span><span class="tg dy">D+20</span></div></div><div class="pr" style="border:none"><span>ofis.kr – M&amp;A</span><div style="display:flex;gap:5px"><span class="tg go">진행중</span><span class="tg dy">D+14</span></div></div></div>
+    <div class="card"><div class="ch"><div class="ct">📊 프로젝트 현황</div></div><div class="ca"><svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="#f0f0f0" stroke-width="12"/><circle cx="40" cy="40" r="32" fill="none" stroke="#05C46B" stroke-width="12" stroke-dasharray="140.7 60.3" stroke-dashoffset="40" stroke-linecap="round"/><text x="40" y="45" text-anchor="middle" font-size="14" font-weight="900" fill="#111">70%</text></svg><div class="lg"><div class="lr"><div style="display:flex;align-items:center;gap:6px"><span class="ld" style="background:#05C46B"></span>완료</div><span class="ln">226</span></div><div class="lr"><div style="display:flex;align-items:center;gap:6px"><span class="ld" style="background:#aaa"></span>진행 중</div><span class="ln">99</span></div><div class="lr"><div style="display:flex;align-items:center;gap:6px"><span class="ld" style="background:#f87171"></span>지연</div><span class="ln">61</span></div></div></div><button class="vb">프로젝트 보기 ↗</button></div>
+  </div>
+</main>
+<div class="tag">시안 C — 상단 GNB + 수평 LNB 탭</div>
+</body></html>
